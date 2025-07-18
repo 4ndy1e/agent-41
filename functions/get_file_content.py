@@ -1,10 +1,10 @@
 import os
-from ..config import word_limit
+# from ..config import max_chars
 
 def get_file_content(working_directory, file_path):
     full_path = os.path.join(working_directory, file_path)
     working_directory_abs_path = os.path.abspath(working_directory)
-    full_abs_path = os.path.abspath(full_abs_path)
+    full_abs_path = os.path.abspath(full_path)
     
     if not full_abs_path.startswith(working_directory_abs_path):
         return f"Error: Cannot read '{file_path} as it is outside the permitted working directory"
@@ -12,4 +12,20 @@ def get_file_content(working_directory, file_path):
     if not os.path.isfile(full_abs_path):
         return f"Error: File not found or is not a regular file: '{file_path}'"
     
+    max_chars = 10000
+    
+    # read the contents of the file 
+    try:
+        with open(full_abs_path, "r") as f:
+            file_contents = f.read(max_chars)
+            
+            if len(file_contents) > max_chars:
+                file_contents += f"[...File '{file_path}' trauncated at 10000 characters]."
+            
+            return file_contents
+    except Exception as error:
+        return f"Error: {error}"
+    
+    
+        
     

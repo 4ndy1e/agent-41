@@ -1,1 +1,1 @@
-char_limit = 10000
+max_chars = 10000
